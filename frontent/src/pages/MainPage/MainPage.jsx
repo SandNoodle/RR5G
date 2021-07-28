@@ -48,7 +48,7 @@ function MainPage() {
 					<StyledContainer>
 						<StyledCol>
 							<CardRow>
-								<GameCards />
+								<GameCards count={5} />
 							</CardRow>
 						</StyledCol>
 						<StyledCol>
