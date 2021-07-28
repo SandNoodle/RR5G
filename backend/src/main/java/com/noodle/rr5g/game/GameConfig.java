@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class StudentConfig {
+public class GameConfig {
 	
 	@Bean
 	CommandLineRunner commandLineRunner(GameRepository gameRepository) {
@@ -32,8 +32,20 @@ public class StudentConfig {
 					"https://static-cdn.jtvnw.net/ttv-boxart/Portal%202-285x380.jpg"
 			);
 			
+			Game katanaZero = new Game(
+						"Katana Zero",
+					270,
+						"https://static-cdn.jtvnw.net/ttv-boxart/Katana%20ZERO-285x380.jpg"
+			);
+			
+			Game sallyFace = new Game(
+					"Sally Face",
+					510,
+					"https://static-cdn.jtvnw.net/ttv-boxart/Sally%20Face-285x380.jpg"
+			);
+			
 			gameRepository.saveAll(
-					List.of(hollowKnight, maxPayneOne, darkSoulsOne, portalTwo)
+					List.of(hollowKnight, maxPayneOne, darkSoulsOne, portalTwo, katanaZero, sallyFace)
 			);
 		};
 	}

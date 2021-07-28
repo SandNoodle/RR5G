@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(path = "api/v1/game")
 public class GameController {
 	private final GameService gameService;
@@ -37,5 +37,10 @@ public class GameController {
 						   @RequestParam(required = false) Integer minutesToComplete,
 						   @RequestParam(required = false) String imageUrl) {
 		gameService.updateGame(gameID, title, minutesToComplete, imageUrl);
+	}
+	
+	@GetMapping(path="/random/{gameCount}")
+	public List<Game> getRandomGames(@PathVariable("gameCount") int gameCount) {
+		return gameService.getRandomGames(gameCount);
 	}
 }

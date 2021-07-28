@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class GameService {
 	
 	private final GameRepository gameRepository;
+	
+	private final int MAX_RANDOM_GAMES = 25;
 	
 	@Autowired
 	public GameService(GameRepository gameRepository) {
@@ -77,5 +78,35 @@ public class GameService {
 			game.setImageUrl(imageUrl);
 		}
 		
+	}
+	
+	public List<Game> getRandomGames(int gameCount) {
+		if (gameCount > MAX_RANDOM_GAMES) {
+			throw new GameInDatabaseException("gameCount over limit of " + MAX_RANDOM_GAMES
+					+ ". Tried to generate " + gameCount + " random games!");
+		}
+		
+		// FAILSAFE: If repository has fewer games than gameCount - return all
+		if(gameRepository.count() <= gameCount) {
+			return gameRepository.findAll();
+		}
+		
+		List<Game> foundGamesList = new ArrayList<>(gameCount);
+		Game tempGame;
+		
+		while(foundGamesList.size() < gameCount) {
+			long randomId = ThreadLocalRandom.current().nextLong(gameCount) + 1;
+			boolean doesGameExist = gameRepository.findGameById(randomId).isPresent();
+			if (doesGameExist) {
+				tempGame = gameRepository.findGameById(randomId).get();
+
+				boolean isGameInList = foundGamesList.contains(tempGame);
+				if(!isGameInList) {
+					foundGamesList.add(tempGame);
+				}
+			}
+		}
+		
+		return foundGamesList;
 	}
 }
