@@ -20,7 +20,6 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import PageFooter from "./components/Universal/Footer/Footer";
 
 ReactDOM.render(
-	<React.StrictMode>
 		<ThemeProvider theme={darkColorTheme}>
 			<>
 				<GlobalStyle />
@@ -35,7 +34,6 @@ ReactDOM.render(
 				<PageFooter />
 				</Router>
 			</>
-		</ThemeProvider>
-	</React.StrictMode>,
+		</ThemeProvider>,
 	document.getElementById("root")
 );
