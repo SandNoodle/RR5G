@@ -16,22 +16,22 @@ public class GameController {
 		this.gameService = gameService;
 	}
 	
-	@GetMapping
+	@GetMapping(path = "all/")
 	public List<Game> getGames() {
 		return gameService.getGames();
 	}
 	
-	@PostMapping
+	@PostMapping(path = "new/")
 	public void registerNewGame(@RequestBody Game game) {
 		gameService.addNewGame(game);
 	}
 	
-	@DeleteMapping(path = {"{gameID}"})
+	@DeleteMapping(path = "delete/{gameID}")
 	public void deleteGameByID(@PathVariable("gameID") Long gameID) {
 		gameService.deleteGameByID(gameID);
 	}
 	
-	@PutMapping(path = "{gameID}")
+	@PutMapping(path = "update/{gameID}")
 	public void updateGame(@PathVariable("gameID") Long gameID,
 						   @RequestParam(required = false) String title,
 						   @RequestParam(required = false) Integer minutesToComplete,
@@ -39,7 +39,7 @@ public class GameController {
 		gameService.updateGame(gameID, title, minutesToComplete, imageUrl);
 	}
 	
-	@GetMapping(path="/random/{gameCount}")
+	@GetMapping(path = "/random/{gameCount}")
 	public List<Game> getRandomGames(@PathVariable("gameCount") int gameCount) {
 		return gameService.getRandomGames(gameCount);
 	}

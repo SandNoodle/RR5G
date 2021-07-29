@@ -26,7 +26,7 @@ public class GameService {
 	
 	public void addNewGame(Game game) {
 		Optional<Game> gameByTitleOptional = gameRepository.findGameByTitle(game.getTitle());
-		if (!gameByTitleOptional.isPresent()) {
+		if (gameByTitleOptional.isPresent()) {
 			throw new GameInDatabaseException(game.getTitle() + " already exists in database!");
 		}
 		
