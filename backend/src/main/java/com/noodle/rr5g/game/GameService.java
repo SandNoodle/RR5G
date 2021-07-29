@@ -95,7 +95,7 @@ public class GameService {
 		Game tempGame;
 		
 		while(foundGamesList.size() < gameCount) {
-			long randomId = ThreadLocalRandom.current().nextLong(gameCount) + 1;
+			long randomId = ThreadLocalRandom.current().nextLong(gameRepository.count()) + 1;
 			boolean doesGameExist = gameRepository.findGameById(randomId).isPresent();
 			if (doesGameExist) {
 				tempGame = gameRepository.findGameById(randomId).get();
@@ -106,7 +106,7 @@ public class GameService {
 				}
 			}
 		}
-		
+		System.out.println(foundGamesList);
 		return foundGamesList;
 	}
 }
