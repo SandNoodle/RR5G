@@ -16,7 +16,10 @@ export const GlobalStyle = createGlobalStyle`
 			${({ theme }) => theme.background_gradient_top} 0%,
 			${({ theme }) => theme.background_gradient_bottom} 100%
 		);
-	}
+
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+}
 `; 
 
 export const darkColorTheme = {
