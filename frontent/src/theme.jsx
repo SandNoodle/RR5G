@@ -3,36 +3,42 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
 
 	body {
+		overflow: hidden;
 		min-width: 100vw;
 		min-height: 100vh;
 
-		background: linear-gradient(
-			180deg,
-			${({ theme }) => theme.background_highlight_light} 0%,
-			${({ theme }) => theme.background_highlight_dark} 100%
-		),
+		background: 
 		radial-gradient(
 			circle at center,
 			${({ theme }) => theme.background_light},
 			${({ theme }) => theme.background_dark}
+		), linear-gradient(
+			180deg,
+			${({ theme }) => theme.background_gradient_top} 0%,
+			${({ theme }) => theme.background_gradient_bottom} 100%
 		);
 	}
 `; 
 
 export const darkColorTheme = {
-	background_dark: '#101625',
-	background_light: '#320074',
-	background_highlight_light: '#FFFFFF00',
-	background_highlight_dark: '#b3004b2b',
+	background_dark: '#000000AB',
+	background_light: '#21212142',
+	background_gradient_top: '#320074',
+	background_gradient_bottom: '#961296',
 	transparent_elevation: '#FFFFFF18',
-	primary: '#2587ff',
-	secondary: '#25baff',
-	card_dark: '#381ba3',
-	card_light: '#16e4ff',
-	card_highlight_dark: '#000000',
-	card_highlight_light: '#080808',
-	game_list_item_background: "#FFFFFF33", 
-	text_high: '#e2e2e2',
-	text_medium: '#a8a8a8b5',
-	text_low: '#ffffff43',
+	primary: '#1E88E5',
+	secondary: '#64B5F6',
+	warning: '#FFC107',
+	danger: '#F44336',
+	info:'#8BC34A',
+	card_dark: '#0D47A1',
+	card_light: '#BBDEFB',
+	card_highlight_dark: '#000',
+	card_highlight_light: '#000',
+	game_list_item_background: "#FFFFFF22", 
+	game_list_item_hover: "#FFFFFF44",
+	text_high: '#FFFFFFDE',
+	text_medium: '#FFFFFF80',
+	text_low: '#ffffff61',
+	modal_background: '#BDBDBD80',
 }
