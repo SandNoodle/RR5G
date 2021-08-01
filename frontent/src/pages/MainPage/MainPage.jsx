@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import CenteredDiv from "../../components/Universal/CenteredDiv";
 import RandomizeButton from "../../components/MainPage/RandomizationButton.jsx/RandomizeButton";
 
-import { GameCards } from "../../components/MainPage/GameCard/GameCardBusinessLogic";
+import { GameCards, fetchGameCardData } from "../../components/MainPage/GameCard/GameCardBusinessLogic";
 
 import styled from "styled-components";
 
@@ -35,10 +35,15 @@ const StyledCol = styled(Col)``;
 
 function MainPage() {
 
-	const [] = useState([]);
+	const [gameCardData, setGameCardData] = useState([]);
+	const updateGameCardData = async (count) => {
+		fetchGameCardData(count).then((res) => {
+			setGameCardData(res);
+		});
+	}
 
 	useEffect(() => {
-		
+		updateGameCardData(5);
 	}, []);
 
 	return (
@@ -48,12 +53,12 @@ function MainPage() {
 					<StyledContainer>
 						<StyledCol>
 							<CardRow>
-								<GameCards count={5} />
+								<GameCards gameData={gameCardData} /> 
 							</CardRow>
 						</StyledCol>
 						<StyledCol>
 							<ButtonRow>
-								<RandomizeButton>Give me 5!</RandomizeButton>
+								<RandomizeButton onClick={() => updateGameCardData(5)}>Give me 5!</RandomizeButton>
 							</ButtonRow>
 						</StyledCol>
 					</StyledContainer>
