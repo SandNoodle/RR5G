@@ -29,7 +29,7 @@ export const darkColorTheme = {
 	primary: '#1E88E5',
 	secondary: '#64B5F6',
 	warning: '#FFC107',
-	danger: '#F44336',
+	danger: '#E57373',
 	info:'#8BC34A',
 	card_dark: '#0D47A1',
 	card_light: '#BBDEFB',
