@@ -173,7 +173,7 @@ Make sure that you installed dependencies listed bellow:
   npm start
 ```
 
-Your server should be running at http://localhost:3000/ while in development mode **or** https:/localhost:3000/ while in production mode.
+Your server should be running at http://localhost:3000/ while in development mode **or** https://localhost:3000/ while in production mode.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
