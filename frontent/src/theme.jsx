@@ -42,5 +42,5 @@ export const darkColorTheme = {
 	text_high: '#FFFFFFDE',
 	text_medium: '#FFFFFF80',
 	text_low: '#ffffff61',
-	modal_background: '#BDBDBD80',
+	modal_background: '#a7bebe80',
 }
