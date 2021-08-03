@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react";
-
-import { getGames, updateGame } from "../../../adapters/AdminPage/AdminPageAdapter";
+import { getGames } from "../../../adapters/AdminPage/AdminPageAdapter";
 
 import GameListItem from "./GameListItem";
 
-export function GameListItems(count) {
-	const [gameItems, setGameItems] = useState([]);
-	const fetchGames = async () => {
-		getGames(count)
-			.then((res) => {
-				console.log(res.data);
-				setGameItems(res.data);
-			})
+export async function fetchGamesData() {
+	return getGames()
+			.then((res) => res.data)
 			.catch((error) => {
 				console.log("Error fetching game data! " + error);
 			});
-	};
-	
-	useEffect(() => {
-		fetchGames();
-	}, []);
+}
+
+export function GameListItems({gameItems}) {
+	if(!gameItems) {
+		return (null);
+	}
 
 	return gameItems.map((game) => {
-		return <GameListItem key={game.id} title={game.title}/>;
+		return (
+			<GameListItem
+				key={game.id}
+				gameTitle={game.title}
+			/>
+		);
 	});
 }

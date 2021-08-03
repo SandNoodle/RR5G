@@ -47,20 +47,20 @@ const Group = styled.div`
 	display: flex;
 `;
 
-export default function GameListItem({ title, deleteEvent }) {
+export default function GameListItem({ gameTitle, deleteEvent, infoEvent, editEvent }) {
 	return (
 		<>
 			<StyledBody>
-				<StyledText className="high">{title}</StyledText>
+				<StyledText className="high">{gameTitle}</StyledText>
 
 				<Group>
-					<Button className="icon info">
+					<Button onClick={() => infoEvent} className="icon info">
 						<InfoIcon size={24} />
 					</Button>
-					<Button className="icon warning">
+					<Button onClick={() => editEvent} className="icon warning">
 						<EditIcon size={24} />
 					</Button>
-					<Button className="icon danger">
+					<Button onClick={() => deleteEvent} className="icon danger">
 						<DeleteIcon size={24} />
 					</Button>
 				</Group>
