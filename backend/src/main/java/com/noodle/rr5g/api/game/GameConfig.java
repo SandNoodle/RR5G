@@ -1,4 +1,4 @@
-package com.noodle.rr5g.game;
+package com.noodle.rr5g.api.game;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import java.util.List;
 public class GameConfig {
 	
 	@Bean
-	CommandLineRunner commandLineRunner(GameRepository gameRepository) {
+	CommandLineRunner gameConfigRunner(GameRepository gameRepository) {
 		return args -> {
 			Game hollowKnight = new Game(
 					"Hollow Knight",

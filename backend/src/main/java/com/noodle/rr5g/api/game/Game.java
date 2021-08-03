@@ -1,4 +1,4 @@
-package com.noodle.rr5g.game;
+package com.noodle.rr5g.api.game;
 
 import javax.persistence.*;
 

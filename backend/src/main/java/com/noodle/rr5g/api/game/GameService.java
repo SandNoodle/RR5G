@@ -1,4 +1,4 @@
-package com.noodle.rr5g.game;
+package com.noodle.rr5g.api.game;
 
 import com.noodle.rr5g.exception.GameInDatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;

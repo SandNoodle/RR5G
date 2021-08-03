@@ -1,4 +1,4 @@
-package com.noodle.rr5g.game;
+package com.noodle.rr5g.api.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

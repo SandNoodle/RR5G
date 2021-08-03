@@ -1,4 +1,4 @@
-package com.noodle.rr5g.game;
+package com.noodle.rr5g.api.game;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
