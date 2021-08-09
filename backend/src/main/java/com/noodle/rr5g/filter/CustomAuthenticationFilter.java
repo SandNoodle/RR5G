@@ -3,7 +3,9 @@ package com.noodle.rr5g.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,12 +25,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.noodle.rr5g.util.Globals.EXPIRE_TIME_MINUTES;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
+	@Setter
+	private String encryptionSecret;
+	
+	@Setter
+	private long authTokenExpireTime;
+	@Setter
+	private long refreshTokenExpireTime;
+	
+	@NonNull
 	private AuthenticationManager authenticationManager;
 	
 	@Override
@@ -49,14 +61,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 											FilterChain chain,
 											Authentication authResult) throws IOException, ServletException {
 		User user = (User) authResult.getPrincipal();
-		/* TODO(SandNoodles):
-		    Move secret out.
-		    Best to store it somewhere in encrypted form that utility class will decrypt and pass it here.
-		 */
-		Algorithm algorithm = Algorithm.HMAC256("Cxy!?x6mv&=w-5N!".getBytes());
+		Algorithm algorithm = Algorithm.HMAC256(encryptionSecret.getBytes());
 		String accessToken = JWT.create()
 				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() * 10 * 60 * 1000))
+				.withExpiresAt(new Date(System.currentTimeMillis() + authTokenExpireTime * EXPIRE_TIME_MINUTES))
 				.withIssuer(request.getRequestURL().toString())
 				.withClaim("roles", user.getAuthorities()
 						.stream()
@@ -65,7 +73,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 				.sign(algorithm);
 		String refreshToken = JWT.create()
 				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() * 30 * 60 * 1000))
+				.withExpiresAt(new Date(System.currentTimeMillis() + refreshTokenExpireTime * EXPIRE_TIME_MINUTES))
 				.withIssuer(request.getRequestURL().toString())
 				.sign(algorithm);
 		

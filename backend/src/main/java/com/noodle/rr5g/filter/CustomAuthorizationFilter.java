@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,24 +24,23 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 	
+	@Setter
+	private String encryptionSecret;
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,
 									HttpServletResponse response,
 									FilterChain filterChain) throws ServletException, IOException {
-		if (request.getServletPath().equals("/api/login")) {
+		if (request.getServletPath().equals("/api/login")
+				|| request.getServletPath().equals("/api/v1/user/token/refresh")) {
 			filterChain.doFilter(request, response);
 		} else {
 			String authorizationHeader = request.getHeader(AUTHORIZATION);
 			
-			boolean isAuthorizationHeaderValid = authorizationHeader != null;
-			if (isAuthorizationHeaderValid) {
+			if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 				try {
-					String providedToken = authorizationHeader;
-					/* TODO(SandNoodles):
-		    			Move secret out.
-		    			Best to store it somewhere in encrypted form that utility class will decrypt and pass it here.
-		 			*/
-					Algorithm algorithm = Algorithm.HMAC256("Cxy!?x6mv&=w-5N!".getBytes());
+					String providedToken = authorizationHeader.substring("Bearer ".length());
+					Algorithm algorithm = Algorithm.HMAC256(encryptionSecret.getBytes());
 					JWTVerifier jwtVerifier = JWT.require(algorithm).build();
 					DecodedJWT decodedJWT = jwtVerifier.verify(providedToken);
 					
@@ -56,7 +56,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 					
 					filterChain.doFilter(request, response);
-				
+					
 				} catch (Exception e) {
 					logger.error("Error logging in: {}", e);
 					response.setHeader("login-error", e.getMessage());
